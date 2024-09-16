@@ -1,0 +1,5 @@
+{
+    "msg_broker": "rocketmq",
+    "msg_size": "mala",
+    "num_of_msgs": 50
+}
