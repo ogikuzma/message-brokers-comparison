@@ -43,9 +43,10 @@ def calculate_result(config, consume_metrics: Dict[str, datetime], produce_metri
         """
     )
 
+    plt.figure().set_figwidth(10)
     plt.hist(np_array)
 
-    plt.title(f"Histogram kašnjenja obrade poruka: {msg_broker.title()} - {num_of_msgs:,} poruka - {msg_size.title()})", loc = 'left')
+    plt.title(f"Histogram kašnjenja obrade poruka: {msg_broker.title()} - {num_of_msgs:,} poruka - {msg_size.title()} veličina poruke", loc = 'left')
     plt.xlabel("Kašnjenje (s)")
     plt.ylabel("Broj poruka")
     

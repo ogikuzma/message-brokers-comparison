@@ -1,10 +1,15 @@
 services:
 
   python:
-    image: python:3.9-alpine
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: /drivers/rocketmq/Dockerfile
     container_name: python
     volumes:
       - ./:/code
+      - /.venv
+    command: tail -f /dev/null
     networks:
       - rocketmq
 

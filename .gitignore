@@ -1,6 +1,6 @@
 __pycache__
 .venv
-credentials
+credentials/credentials.py
 results
 
 messages/*.txt

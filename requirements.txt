@@ -1,3 +1,4 @@
 pika
 numpy
 nats-py
+rocketmq-client-python

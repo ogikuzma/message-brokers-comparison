@@ -3,6 +3,8 @@ from typing import Protocol
 
 
 class DriverInterface(Protocol):
+
+    result_path = 'results'
     
     @abstractmethod
     def init_connection(self): raise NotImplementedError

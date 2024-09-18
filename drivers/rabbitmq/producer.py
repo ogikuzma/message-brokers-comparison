@@ -14,7 +14,6 @@ class RabbitMqProducer(RabbitMqDriver, ProducerDriver):
         channel = self.connection.channel()
 
         message = None
-        produce_metrics = {}
 
         # Pripremi sadržaj poruke
         with open(msg_path, 'r') as file:

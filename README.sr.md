@@ -1,7 +1,10 @@
 # Kako početi
 
+## Preduslovi
+- `Linux` operativni sistem zbog nedostatka podrške biblioteke `rocketmq-client-python` za `Windows` operativni sistem, kao i Mac računare zasnovane na `M` procesorima
+
 ## Generisanje testnih poruka
-Prvo je potrebno generisati poruke nasumične sadržine koje će biti korišćene za izvršavanja testova:
+Prvo je potrebno generisati tekstualne poruke nasumične sadržine koje će biti korišćene za izvršavanja testova:
 1. Izvršiti komandu:
 ```
 make generate-messages
@@ -21,19 +24,14 @@ make start-infra
 ```
 
 ## Izvršavanje testova
-Svaki test je potrebno izvršiti u 3 koraka:
-
-1. Izvršiti komandu `python -m drivers.[MESSAGE_BROKER].consumer` sa željenim parametrima kako bi se pokrenuo konzument poruka.
-Primer naveden ispod pokreće RabbitMq konzument poruka koji osluškuje i čeka 1000 malih poruka:
-```
-python -m drivers.rabbitmq.consumer --msg_size mala --num_of_msgs 1000
-```
-2. Nakon što se u konzoli prikaže poruka da je konzument poruka spreman, u drugom terminalu je potrebno pokrenuti komandu `python -m drivers.[MESSAGE_BROKER].producer` sa željenim parametrima kako si pokrenuo generator poruka. Parametri navedeni ovde moraju da se poklapaju sa parametrima postavljenim prilikom pokretanja konzumenta poruka.
-Primer:
-```
-python -m drivers.rabbitmq.producer --msg_size mala --num_of_msgs 1000
-```
-3. Nakon što i generator i konzument poruka završe svoj posao, potrebno je pokrenuti komandu `python -m metrics_extractor.extract_metrics --msg_broker [MESSAGE_BROKER]` kako bi rezultati testa postali vidljivi u konzoli.
+1. U `test_config.json` fajlu je potrebno podesiti željene parametre:
+- `msg_broker`: `rabbitmq | nats | rocketmq`
+- `msg_size`: `mala | srednja | velika`
+- `num_of_msgs`: broj poruka
+2. Pokrenuti konzumenta poruka sa komandom `python consumer.py`
+3. Nakon što se u konzoli prikaže poruka da je konzument poruka spreman, 
+u drugoj konzoli pokrenuti generatora poruka sa komandom `python producer.py`. Generator poruka će krenuti da generiše poruke.
+4. Nakon što i generator i konzument poruka završe svoja zaduženja, potrebno je pokrenuti komandu `python extract_metrics.py` kako bi rezultati testa postali vidljivi u terminalu.
 
 ## Zaustavljanje pokrenutih resursa
 1. Nakon završetka izvršavanja testova, osloboditi pokrenute resurse izvršenjem korake ispod:
