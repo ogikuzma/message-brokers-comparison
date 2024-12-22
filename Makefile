@@ -1,10 +1,26 @@
-.PHONY: start-infra
-start-infra:
-	docker-compose -f docker-compose.local.yml up --build
+.PHONY: start-rabbit
+start-rabbit:
+	docker-compose -f docker-compose.rabbit.yml up --build
 
-.PHONY: stop-infra
-stop-infra:
-	docker-composer -f docker-compose.local.yml down
+.PHONY: stop-rabbit
+stop-rabbit:
+	docker-composer -f docker-compose.rabbit.yml down
+
+.PHONY: start-nats
+start-nats:
+	docker-compose -f docker-compose.nats.yml up --build
+
+.PHONY: stop-nats
+stop-nats:
+	docker-composer -f docker-compose.nats.yml down
+
+.PHONY: start-rocketmq
+start-rocketmq:
+	docker-compose -f docker-compose.rocketmq.yml up --build
+
+.PHONY: stop-rocketmq
+stop-rocketmq:
+	docker-composer -f docker-compose.rocketmq.yml down
 
 .PHONY: generate-messages
 generate-messages:

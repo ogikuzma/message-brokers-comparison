@@ -1,3 +1,4 @@
+import os
 import pickle
 import pika
 from datetime import datetime, timedelta
@@ -53,7 +54,14 @@ class RabbitMqProducer(RabbitMqDriver, ProducerDriver):
         produce_metrics['num_of_msgs'] = config['num_of_msgs']
         produce_metrics['total_publish_time'] = total_publish_time
 
-        with open('results/rabbitmq/produce_metrics.pkl', 'wb') as f:
+        test_name = f"{config['msg_size']}_{config['num_of_msgs']}"
+
+        save_path = f"results/{config['env']}/rabbitmq/{test_name}"
+
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+        
+        with open(f"{save_path}/produce_metrics.pkl", 'wb') as f:
             pickle.dump(produce_metrics, f)
 
 

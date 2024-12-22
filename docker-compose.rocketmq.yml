@@ -14,7 +14,7 @@ services:
       - rocketmq
 
   namesrv:
-    image: apache/rocketmq:5.3.0
+    image: apache/rocketmq:5.2.0
     container_name: rmqnamesrv
     ports:
       - 9876:9876
@@ -23,7 +23,7 @@ services:
     command: sh mqnamesrv
 
   broker:
-    image: apache/rocketmq:5.3.0
+    image: apache/rocketmq:5.2.0
     container_name: rmqbroker
     ports:
       - 10909:10909
@@ -38,7 +38,7 @@ services:
     command: sh mqbroker
 
   proxy:
-    image: apache/rocketmq:5.3.0
+    image: apache/rocketmq:5.2.0
     container_name: rmqproxy
     networks:
       - rocketmq

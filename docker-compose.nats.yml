@@ -1,0 +1,17 @@
+services:
+
+  nats:
+    image: nats:2.10.14-alpine
+    container_name: nats-server
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    environment:
+      - NATS_SERVER_NAME=nats-server
+    command: ["-DV"]
+
+  nats-ui:
+    image: sphqxe/nats-webui
+    container_name: nats-ui
+    ports:
+      - "8080:80"

@@ -17,6 +17,6 @@ def generate_message(filename: str, size_in_bytes: int):
     with open(f'messages/{filename}', 'w') as file:
         file.write(text_content)
 
-generate_message('10kb_message.txt', 10_000)
+generate_message('1kb_message.txt', 1_000)
+generate_message('100kb_message.txt', 100_000)
 generate_message('1mb_message.txt', 1_000_000)
-generate_message('10mb_message.txt', 10_000_000)

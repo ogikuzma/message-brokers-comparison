@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import os
 import pickle
 from typing import Dict, Tuple
 
@@ -65,7 +66,14 @@ class RocketMqConsumer(RocketMqDriver, ConsumerDriver):
         consume_metrics['num_of_msgs'] = config['num_of_msgs']
         consume_metrics['total_consume_time'] = total_consume_time
 
-        with open('results/rocketmq/consume_metrics.pkl', 'wb') as f:
+        test_name = f"{config['msg_size']}_{config['num_of_msgs']}"
+
+        save_path = f"results/{config['env']}/rocketmq/{test_name}"
+        
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+
+        with open(f"{save_path}/consume_metrics.pkl", 'wb') as f:
             pickle.dump(consume_metrics, f)
     
 

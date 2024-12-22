@@ -6,10 +6,10 @@ def get_parsed_config():
         config = json.load(file)
 
     if config['msg_size'] == 'mala':
-        config['msg_path'] = f'messages/10kb_message.txt'
+        config['msg_path'] = f'messages/1kb_message.txt'
     elif config['msg_size'] == 'srednja':
-        config['msg_path'] = f'messages/1mb_message.txt'
+        config['msg_path'] = f'messages/100kb_message.txt'
     else:
-        config['msg_path'] = f'messages/10mb_message.txt'
+        config['msg_path'] = f'messages/1mb_message.txt'
 
     return config

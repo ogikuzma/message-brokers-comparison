@@ -26,22 +26,24 @@ def calculate_result(config, consume_metrics: Dict[str, datetime], produce_metri
     median = np.percentile(np_array, 50)
     p95 = np.percentile(np_array, 95)
     p99 = np.percentile(np_array, 99)
+    stddev = np.std(np_array)
 
-    print(
-        f"""\n
-        Broker: RabbitMQ
+    result = f"""\n
+        Broker: {msg_broker}
         Broj poruka: {num_of_msgs}
         Veličina poruke: {msg_size.title()}
         Kašnjenje - Prosečno vreme obrade jedne poruke: {round(mean_time, 2)}s
         Kašnjenje - Medijana: {round(median, 2)}s
         Kašnjenje - p95: {round(p95, 2)}s
-        Kašnjene - p99: {round(p99, 2)}s
+        Kašnjenje - p99: {round(p99, 2)}s
+        Kašnjenje - stddev: {round(stddev, 2)}
         Ukupno vreme za objavljivanje poruka: {round(total_publish_time.total_seconds(), 2)}s
         Ukupno vreme za konzumiranje poruka: {round(total_consume_time.total_seconds(), 2)}s\n
         Protok - {round(num_of_msgs / total_publish_time.total_seconds(), 2)} objavljenih poruka u jedinici vremena
         Protok - {round(num_of_msgs / total_consume_time.total_seconds(), 2)} konzumiranih poruka u jedinici vremena
-        """
-    )
+    """
+    
+    print(result)
 
     plt.figure().set_figwidth(10)
     plt.hist(np_array)
@@ -51,6 +53,7 @@ def calculate_result(config, consume_metrics: Dict[str, datetime], produce_metri
     plt.ylabel("Broj poruka")
     
     plt.show()
+    return result
 
 
 if __name__ == "__main__":
@@ -58,10 +61,15 @@ if __name__ == "__main__":
     # Pročitaj parametre testa
     config = get_parsed_config()
 
-    with open(f'results/{config["msg_broker"]}/produce_metrics.pkl', 'rb') as file:
+    test_name = f"{config['msg_size']}_{config['num_of_msgs']}"
+
+    with open(f"results/{config['env']}/{config['msg_broker']}/{test_name}/produce_metrics.pkl", 'rb') as file:
         produce_metrics = pickle.load(file)
 
-    with open(f'results/{config["msg_broker"]}/consume_metrics.pkl', 'rb') as file:
+    with open(f"results/{config['env']}/{config['msg_broker']}/{test_name}/consume_metrics.pkl", 'rb') as file:
         consume_metrics = pickle.load(file)
 
-    calculate_result(config, consume_metrics, produce_metrics)
+    result = calculate_result(config, consume_metrics, produce_metrics)
+
+    with open(f"results/{config['env']}/{config['msg_broker']}/{test_name}/result.txt", 'w', encoding="utf-8") as file:
+        file.write(result)

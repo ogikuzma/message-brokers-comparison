@@ -1,5 +1,4 @@
 import asyncio
-import json
 
 from config_parser.config_parser import get_parsed_config
 from drivers.nats.consumer import NatsConsumer

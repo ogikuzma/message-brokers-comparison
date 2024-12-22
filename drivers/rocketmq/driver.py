@@ -1,5 +1,3 @@
-import pika
-
 from credentials.credentials import credentials_params
 from drivers.driver_interface import DriverInterface
 
